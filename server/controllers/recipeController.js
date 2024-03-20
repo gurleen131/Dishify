@@ -14,10 +14,12 @@ exports.homepage = async(req, res) => {
     const thai = await Recipe.find({ 'category': 'Thai' }).limit(limitNumber);
     const american = await Recipe.find({ 'category': 'American' }).limit(limitNumber);
     const chinese = await Recipe.find({ 'category': 'Chinese' }).limit(limitNumber);
+    const indian = await Recipe.find({ 'category': 'Indian' }).limit(limitNumber);
+    const mexican = await Recipe.find({ 'category': 'Mexican' }).limit(limitNumber);
 
-    const food = { latest, thai, american, chinese };
+    const food = { latest, thai, american, chinese,indian,mexican };
 
-    res.render('index', { title: 'Cooking Blog - Home', categories, food } );
+    res.render('index', { title: 'Dishify - Home', categories, food } );
   } catch (error) {
     res.satus(500).send({message: error.message || "Error Occured" });
   }
@@ -31,7 +33,7 @@ exports.exploreCategories = async(req, res) => {
   try {
     const limitNumber = 20;
     const categories = await Category.find({}).limit(limitNumber);
-    res.render('categories', { title: 'Cooking Blog - Categories', categories } );
+    res.render('categories', { title: 'Dishify - Categories', categories } );
   } catch (error) {
     res.status(500).send({message: error.message || "Error Occured" });
   }
@@ -47,7 +49,7 @@ exports.exploreCategoriesById = async(req, res) => {
     let categoryId = req.params.id;
     const limitNumber = 20;
     const categoryById = await Recipe.find({ 'category': categoryId }).limit(limitNumber);
-    res.render('categories', { title: 'Cooking Blog - Categoreis', categoryById } );
+    res.render('categories', { title: 'Dishify - Categoreis', categoryById } );
   } catch (error) {
     res.satus(500).send({message: error.message || "Error Occured" });
   }
@@ -61,7 +63,7 @@ exports.exploreRecipe = async(req, res) => {
   try {
     let recipeId = req.params.id;
     const recipe = await Recipe.findById(recipeId);
-    res.render('recipe', { title: 'Cooking Blog - Recipe', recipe } );
+    res.render('recipe', { title: 'Dishify - Recipe', recipe } );
   } catch (error) {
     res.satus(500).send({message: error.message || "Error Occured" });
   }
@@ -76,7 +78,7 @@ exports.searchRecipe = async(req, res) => {
   try {
     let searchTerm = req.body.searchTerm;
     let recipe = await Recipe.find( { $text: { $search: searchTerm, $diacriticSensitive: true } });
-    res.render('search', { title: 'Cooking Blog - Search', recipe } );
+    res.render('search', { title: 'Dishify - Search', recipe } );
   } catch (error) {
     res.satus(500).send({message: error.message || "Error Occured" });
   }
@@ -91,7 +93,7 @@ exports.exploreLatest = async(req, res) => {
   try {
     const limitNumber = 20;
     const recipe = await Recipe.find({}).sort({ _id: -1 }).limit(limitNumber);
-    res.render('explore-latest', { title: 'Cooking Blog - Explore Latest', recipe } );
+    res.render('explore-latest', { title: 'Dishify - Explore Latest', recipe } );
   } catch (error) {
     res.satus(500).send({message: error.message || "Error Occured" });
   }
@@ -108,7 +110,7 @@ exports.exploreRandom = async(req, res) => {
     let count = await Recipe.find().countDocuments();
     let random = Math.floor(Math.random() * count);
     let recipe = await Recipe.findOne().skip(random).exec();
-    res.render('explore-random', { title: 'Cooking Blog - Explore Latest', recipe } );
+    res.render('explore-random', { title: 'Dishify - Explore Random', recipe } );
   } catch (error) {
     res.satus(500).send({message: error.message || "Error Occured" });
   }
@@ -122,7 +124,7 @@ exports.exploreRandom = async(req, res) => {
 exports.submitRecipe = async(req, res) => {
   const infoErrorsObj = req.flash('infoErrors');
   const infoSubmitObj = req.flash('infoSubmit');
-  res.render('submit-recipe', { title: 'Cooking Blog - Submit Recipe', infoErrorsObj, infoSubmitObj  } );
+  res.render('submit-recipe', { title: 'Dishify - Submit Recipe', infoErrorsObj, infoSubmitObj  } );
 }
 
 /**
