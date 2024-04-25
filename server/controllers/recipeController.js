@@ -174,30 +174,42 @@ exports.submitRecipeOnPost = async(req, res) => {
 }
 
 
+exports.about = async(req,res) =>{
+  const infoErrorsObj = req.flash('infoErrors');
+  const infoSubmitObj = req.flash('infoSubmit');
+  res.render('about', { title: 'Dishify - Submit Recipe', infoErrorsObj, infoSubmitObj  } );
+
+}
+
+exports.contact = async(req,res) =>{
+  const infoErrorsObj = req.flash('infoErrors');
+  const infoSubmitObj = req.flash('infoSubmit');
+  res.render('contact', { title: 'Dishify - Submit Recipe', infoErrorsObj, infoSubmitObj  } );
+
+}
 
 
-// Delete Recipe
-// async function deleteRecipe(){
-//   try {
-//     await Recipe.deleteOne({ name: 'New Recipe From Form' });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// deleteRecipe();
+async function deleteRecipe(){
+  try {
+    await Recipe.deleteOne({ name: 'New Recipe From Form' });
+  } catch (error) {
+    console.log(error);
+  }
+}
+deleteRecipe();
 
 
 // Update Recipe
-// async function updateRecipe(){
-//   try {
-//     const res = await Recipe.updateOne({ name: 'New Recipe' }, { name: 'New Recipe Updated' });
-//     res.n; // Number of documents matched
-//     res.nModified; // Number of documents modified
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// updateRecipe();
+async function updateRecipe(){
+  try {
+    const res = await Recipe.updateOne({ name: 'New Recipe' }, { name: 'New Recipe Updated' });
+    res.n; // Number of documents matched
+    res.nModified; // Number of documents modified
+  } catch (error) {
+    console.log(error);
+  }
+}
+updateRecipe();
 
 
 /**
